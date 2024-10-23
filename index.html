@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+      }
+
+      button,
+      input {
+        background: none;
+        border: none;
+        margin: 0;
+        outline: none;
+        padding: 0;
+      }
+
+      #input-container,
+      #canvas {
+        align-items: center;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+
+      #canvas {
+        pointer-events: none;
+      }
+
+      #input-container #input-row {
+        align-items: center;
+        background-color: #462e31;
+        border-radius: 24px;
+        display: flex;
+        max-width: 400px;
+        padding: 4px;
+        width: 80%;
+      }
+
+      #input-container #input-row input {
+        color: white;
+        flex: 1 1 0;
+        font-size: 24px;
+        line-height: 32px;
+        min-width: 0;
+        padding: 0 24px;
+      }
+
+      #input-container #input-row button {
+        background-color: rgba(255, 255, 255, 0.3);
+        border-radius: 20px;
+        color: white;
+        cursor: pointer;
+        flex: 0 0 auto;
+        font-size: 24px;
+        line-height: 32px;
+        min-width: 0;
+        padding: 4px 12px;
+      }
+
+      #input-container #input-row button:hover,
+      #input-container #input-row button:active {
+        background-color: rgba(255, 255, 255, 0.45);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="input-container">
+      <div id="input-row">
+        <input id="count-input" />
+        <button id="generate-button">ちいかわ！</button>
+      </div>
+    </div>
+
+    <div id="canvas"></div>
+
+    <script>
+      const countInput = document.getElementById('count-input')
+      const generateButton = document.getElementById('generate-button')
+      const canvas = document.getElementById('canvas')
+
+      generateButton.addEventListener('click', function () {
+        const count = parseInt(countInput.value)
+
+        if (isNaN(count)) {
+          return
+        }
+
+        addChiikawa(0, count)
+      })
+
+      function addChiikawa(current, totalCount) {
+        if (current >= totalCount) {
+          return
+        }
+
+        const wrapper = document.createElement('div')
+        wrapper.addEventListener('click', function () {
+          canvas.removeChild(wrapper)
+        })
+        wrapper.style.pointerEvents = 'auto'
+        wrapper.style.position = 'absolute'
+        wrapper.style.top = `${Math.random() * 100}vh`
+        wrapper.style.left = `${Math.random() * 100}vw`
+        wrapper.style.transform = 'translate(-50%, -50%)'
+
+        const img = document.createElement('img')
+        img.src = './chiikawa.png'
+        img.style.transform = `
+          rotate(${Math.random() * 360}deg)
+          scale(${Math.random() * 0.5 + 0.5})
+        `
+
+        wrapper.appendChild(img)
+        canvas.appendChild(wrapper)
+
+        setTimeout(() => {
+          addChiikawa(current + 1, totalCount)
+        }, 50)
+      }
+    </script>
+  </body>
+</html>
