@@ -91,7 +91,15 @@
       const generateButton = document.getElementById('generate-button')
       const canvas = document.getElementById('canvas')
 
-      const imageSource = Math.random() < 0.5 ? './chiikawa.png' : './hachiware.png'
+      const imageFilenameList = [
+        'chiikawa-1.png',
+        'hachiware-1.png',
+        'hachiware-2.png',
+        'kuri-manju-1.png',
+        'momonga-1.png',
+        'usagi-1.png',
+      ]
+      const imageFilename = imageFilenameList[Math.floor(Math.random() * imageFilenameList.length)]
 
       generateButton.addEventListener('click', function () {
         const count = parseInt(countInput.value)
@@ -119,7 +127,7 @@
         wrapper.style.transform = 'translate(-50%, -50%)'
 
         const img = document.createElement('img')
-        img.src = imageSource
+        img.src = `./images/${imageFilename}`
         img.style.transform = `
           rotate(${Math.random() * 360}deg)
           scale(${Math.random() * 0.5 + 0.5})
